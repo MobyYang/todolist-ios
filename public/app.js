@@ -146,7 +146,6 @@ class TodoApp {
 
   bindEvents() {
     document.getElementById('sidebar-toggle').addEventListener('click', () => this.toggleSidebar());
-    document.getElementById('sidebar-overlay').addEventListener('click', () => this.closeSidebar());
 
     document.getElementById('category-list').addEventListener('click', (e) => {
       const item = e.target.closest('.category-item');
