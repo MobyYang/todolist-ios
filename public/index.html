@@ -58,13 +58,13 @@
         <div class="sidebar-header">
           <h1>标签</h1>
         </div>
-        <div class="tag-list" id="tag-list"></div>
-        <div class="sidebar-footer">
-          <button class="btn-text" id="show-all-memos-btn">
-            <span class="icon">📝</span>
-            <span>全部笔记</span>
-          </button>
+        <div class="category-list">
+          <div class="category-item" id="show-all-memos-btn">
+            <div class="category-icon" style="background: rgba(10, 132, 255, 0.2); color: #0A84FF">📝</div>
+            <span class="category-name">全部笔记</span>
+          </div>
         </div>
+        <div class="tag-list" id="tag-list"></div>
       </aside>
 
       <main class="main-content memo-content">
@@ -215,6 +215,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- 图片预览 -->
+  <div class="image-preview-overlay hidden" id="image-preview">
+    <button class="image-preview-close" id="image-preview-close">×</button>
+    <img src="" alt="" id="image-preview-img">
   </div>
 
   <script src="app.js"></script>

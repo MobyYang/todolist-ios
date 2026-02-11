@@ -556,7 +556,12 @@ class MemoApp {
     document.getElementById('recent-tags').addEventListener('click', (e) => {
       const btn = e.target.closest('.recent-tag');
       if (btn) {
-        document.getElementById('tag-input-field').value = btn.dataset.tag;
+        const tag = btn.dataset.tag;
+        if (tag && !this.pendingTags.includes(tag)) {
+          this.pendingTags.push(tag);
+          this.renderPendingTags();
+        }
+        this.closeTagInput();
       }
     });
     document.getElementById('tag-input-modal').addEventListener('click', (e) => { if (e.target.id === 'tag-input-modal') this.closeTagInput(); });
@@ -583,6 +588,46 @@ class MemoApp {
     document.getElementById('memo-modal-close').addEventListener('click', () => this.closeMemoDetail());
     document.getElementById('memo-modal-delete').addEventListener('click', () => this.deleteMemo());
     document.getElementById('memo-modal').addEventListener('click', (e) => { if (e.target.id === 'memo-modal') this.closeMemoDetail(); });
+
+    // 侧边栏遮罩点击关闭
+    document.getElementById('sidebar-overlay').addEventListener('click', () => this.closeSidebar());
+
+    // 图片预览
+    document.getElementById('memo-list').addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG' && e.target.closest('.memo-card-images')) {
+        e.stopPropagation();
+        this.showImagePreview(e.target.src);
+      }
+    });
+    document.getElementById('memo-detail').addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG') {
+        this.showImagePreview(e.target.src);
+      }
+    });
+    document.getElementById('memo-images').addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG') {
+        this.showImagePreview(e.target.src);
+      }
+    });
+    document.getElementById('image-preview').addEventListener('click', (e) => {
+      if (e.target.id === 'image-preview' || e.target.id === 'image-preview-close') {
+        this.hideImagePreview();
+      }
+    });
+  }
+
+  showImagePreview(src) {
+    document.getElementById('image-preview-img').src = src;
+    document.getElementById('image-preview').classList.remove('hidden');
+    setTimeout(() => document.getElementById('image-preview').classList.add('visible'), 10);
+  }
+
+  hideImagePreview() {
+    document.getElementById('image-preview').classList.remove('visible');
+    setTimeout(() => {
+      document.getElementById('image-preview').classList.add('hidden');
+      document.getElementById('image-preview-img').src = '';
+    }, 200);
   }
 
   toggleSidebar() {

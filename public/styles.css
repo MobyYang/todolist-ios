@@ -709,8 +709,8 @@ html, body {
 }
 
 .memo-input-area {
-  padding: var(--spacing-md);
-  padding-bottom: 0;
+  padding: 0 var(--spacing-md);
+  padding-top: var(--spacing-sm);
 }
 
 .memo-input-box {
@@ -720,8 +720,8 @@ html, body {
 }
 
 .memo-editor {
-  min-height: 80px;
-  max-height: 200px;
+  min-height: 160px;
+  max-height: 300px;
   padding: var(--spacing-md);
   font-size: 16px;
   line-height: 1.6;
@@ -1015,6 +1015,50 @@ html, body {
 
 .btn-danger-text {
   color: var(--system-red);
+}
+
+/* ==================== 图片预览 ==================== */
+.image-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.image-preview-overlay.visible {
+  opacity: 1;
+}
+
+.image-preview-overlay img {
+  max-width: 95%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.image-preview-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--fill-secondary);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ==================== 工具类 ==================== */
