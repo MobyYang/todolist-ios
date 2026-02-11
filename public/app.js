@@ -589,9 +589,6 @@ class MemoApp {
     document.getElementById('memo-modal-delete').addEventListener('click', () => this.deleteMemo());
     document.getElementById('memo-modal').addEventListener('click', (e) => { if (e.target.id === 'memo-modal') this.closeMemoDetail(); });
 
-    // 侧边栏遮罩点击关闭
-    document.getElementById('sidebar-overlay').addEventListener('click', () => this.closeSidebar());
-
     // 图片预览
     document.getElementById('memo-list').addEventListener('click', (e) => {
       if (e.target.tagName === 'IMG' && e.target.closest('.memo-card-images')) {
@@ -766,6 +763,12 @@ class App {
         const page = item.dataset.page;
         this.switchPage(page);
       });
+    });
+
+    // 统一处理侧边栏遮罩点击
+    document.getElementById('sidebar-overlay').addEventListener('click', () => {
+      this.todoApp.closeSidebar();
+      this.memoApp.closeSidebar();
     });
   }
 

@@ -706,11 +706,17 @@ html, body {
 .memo-content {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.memo-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .memo-input-area {
-  padding: 0 var(--spacing-md);
-  padding-top: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
 }
 
 .memo-input-box {
@@ -852,10 +858,8 @@ html, body {
 
 /* 笔记列表 */
 .memo-list {
-  flex: 1;
-  overflow-y: auto;
   padding: var(--spacing-md);
-  -webkit-overflow-scrolling: touch;
+  padding-top: 0;
 }
 
 .memo-card {
@@ -913,11 +917,21 @@ html, body {
   color: var(--label-tertiary);
 }
 
-/* 标签列表 */
-.tag-list {
+/* 笔记侧边栏内容 */
+.memo-sidebar-content {
   flex: 1;
   overflow-y: auto;
   padding: 0 var(--spacing-sm);
+  -webkit-overflow-scrolling: touch;
+}
+
+.memo-sidebar-content .category-item {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* 标签列表 */
+.tag-list {
+  padding-top: var(--spacing-sm);
 }
 
 .tag-item {

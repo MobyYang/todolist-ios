@@ -58,13 +58,13 @@
         <div class="sidebar-header">
           <h1>标签</h1>
         </div>
-        <div class="category-list">
+        <div class="memo-sidebar-content">
           <div class="category-item" id="show-all-memos-btn">
             <div class="category-icon" style="background: rgba(10, 132, 255, 0.2); color: #0A84FF">📝</div>
             <span class="category-name">全部笔记</span>
           </div>
+          <div class="tag-list" id="tag-list"></div>
         </div>
-        <div class="tag-list" id="tag-list"></div>
       </aside>
 
       <main class="main-content memo-content">
@@ -73,29 +73,31 @@
           <h2 id="memo-view-title">笔记</h2>
         </header>
 
-        <!-- 笔记输入区 - flomo 风格 -->
-        <div class="memo-input-area">
-          <div class="memo-input-box" id="memo-input-box">
-            <div class="memo-editor" id="memo-editor" contenteditable="true" placeholder="现在的想法是..."></div>
-            <div class="memo-images" id="memo-images"></div>
-            <div class="memo-tags-input" id="memo-tags-input"></div>
-            <div class="memo-toolbar">
-              <label class="toolbar-btn" id="add-image-btn">
-                <input type="file" accept="image/*" id="image-input" hidden multiple>
-                🖼️
-              </label>
-              <button class="toolbar-btn" id="add-tag-btn">#</button>
-              <button class="memo-submit-btn" id="memo-submit-btn">记录</button>
+        <div class="memo-scroll-area">
+          <!-- 笔记输入区 - flomo 风格 -->
+          <div class="memo-input-area">
+            <div class="memo-input-box" id="memo-input-box">
+              <div class="memo-editor" id="memo-editor" contenteditable="true" placeholder="现在的想法是..."></div>
+              <div class="memo-images" id="memo-images"></div>
+              <div class="memo-tags-input" id="memo-tags-input"></div>
+              <div class="memo-toolbar">
+                <label class="toolbar-btn" id="add-image-btn">
+                  <input type="file" accept="image/*" id="image-input" hidden multiple>
+                  🖼️
+                </label>
+                <button class="toolbar-btn" id="add-tag-btn">#</button>
+                <button class="memo-submit-btn" id="memo-submit-btn">记录</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 笔记列表 -->
-        <div class="memo-list" id="memo-list"></div>
+          <!-- 笔记列表 -->
+          <div class="memo-list" id="memo-list"></div>
 
-        <div class="empty-state hidden" id="memo-empty-state">
-          <div class="empty-icon">💭</div>
-          <p>开始记录你的想法</p>
+          <div class="empty-state hidden" id="memo-empty-state">
+            <div class="empty-icon">💭</div>
+            <p>开始记录你的想法</p>
+          </div>
         </div>
       </main>
     </div>
