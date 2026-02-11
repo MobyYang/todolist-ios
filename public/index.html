@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="效率工具">
+  <title>效率工具</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 侧边栏遮罩 -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    
+    <!-- ==================== 待办页面 ==================== -->
+    <div id="todo-page" class="page active">
+      <!-- 侧边栏 - 分类列表 -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h1>待办事项</h1>
+          <button class="btn-icon" id="add-category-btn">➕</button>
+        </div>
+        
+        <div class="category-list" id="category-list"></div>
+
+        <div class="sidebar-footer">
+          <button class="btn-text" id="show-completed-btn">
+            <span class="icon">✅</span>
+            <span>已完成</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- 主内容区 -->
+      <main class="main-content">
+        <header class="main-header">
+          <button class="btn-icon sidebar-toggle" id="sidebar-toggle">☰</button>
+          <h2 id="current-view-title">全部</h2>
+          <button class="btn-icon" id="add-todo-btn">➕</button>
+        </header>
+
+        <div class="todo-list" id="todo-list"></div>
+
+        <div class="empty-state hidden" id="empty-state">
+          <div class="empty-icon">📝</div>
+          <p>没有待办事项</p>
+          <button class="btn-primary" id="empty-add-btn">添加待办</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- ==================== 笔记页面 ==================== -->
+    <div id="memo-page" class="page">
+      <!-- 标签侧边栏 -->
+      <aside class="sidebar" id="memo-sidebar">
+        <div class="sidebar-header">
+          <h1>标签</h1>
+        </div>
+        <div class="tag-list" id="tag-list"></div>
+        <div class="sidebar-footer">
+          <button class="btn-text" id="show-all-memos-btn">
+            <span class="icon">📝</span>
+            <span>全部笔记</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content memo-content">
+        <header class="main-header">
+          <button class="btn-icon sidebar-toggle" id="memo-sidebar-toggle">☰</button>
+          <h2 id="memo-view-title">笔记</h2>
+        </header>
+
+        <!-- 笔记输入区 - flomo 风格 -->
+        <div class="memo-input-area">
+          <div class="memo-input-box" id="memo-input-box">
+            <div class="memo-editor" id="memo-editor" contenteditable="true" placeholder="现在的想法是..."></div>
+            <div class="memo-images" id="memo-images"></div>
+            <div class="memo-tags-input" id="memo-tags-input"></div>
+            <div class="memo-toolbar">
+              <label class="toolbar-btn" id="add-image-btn">
+                <input type="file" accept="image/*" id="image-input" hidden multiple>
+                🖼️
+              </label>
+              <button class="toolbar-btn" id="add-tag-btn">#</button>
+              <button class="memo-submit-btn" id="memo-submit-btn">记录</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 笔记列表 -->
+        <div class="memo-list" id="memo-list"></div>
+
+        <div class="empty-state hidden" id="memo-empty-state">
+          <div class="empty-icon">💭</div>
+          <p>开始记录你的想法</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- ==================== 底部导航栏 ==================== -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-page="todo">
+        <span class="nav-icon">✅</span>
+        <span class="nav-label">待办</span>
+      </button>
+      <button class="nav-item" data-page="memo">
+        <span class="nav-icon">📝</span>
+        <span class="nav-label">笔记</span>
+      </button>
+    </nav>
+
+    <!-- ==================== 弹窗 ==================== -->
+    
+    <!-- 待办弹窗 -->
+    <div class="modal hidden" id="todo-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="btn-text" id="modal-cancel">取消</button>
+          <h3 id="modal-title">新建待办</h3>
+          <button class="btn-text btn-primary-text" id="modal-save">保存</button>
+        </div>
+        
+        <form id="todo-form">
+          <input type="hidden" id="todo-id">
+          <div class="form-group">
+            <input type="text" id="todo-title" placeholder="待办内容" required>
+          </div>
+          <div class="form-group">
+            <textarea id="todo-notes" placeholder="备注"></textarea>
+          </div>
+          <div class="form-row">
+            <label><span class="icon">📁</span>分类</label>
+            <select id="todo-category"><option value="">无</option></select>
+          </div>
+          <div class="form-row">
+            <label><span class="icon">📅</span>日期</label>
+            <input type="date" id="todo-date">
+          </div>
+          <div class="form-row">
+            <label><span class="icon">⏰</span>时间</label>
+            <input type="time" id="todo-time">
+          </div>
+          <div class="form-row">
+            <label><span class="icon">🔔</span>提醒</label>
+            <input type="datetime-local" id="todo-reminder">
+          </div>
+        </form>
+        <button class="btn-danger hidden" id="modal-delete">删除待办</button>
+      </div>
+    </div>
+
+    <!-- 分类弹窗 -->
+    <div class="modal hidden" id="category-modal">
+      <div class="modal-content modal-small">
+        <div class="modal-header">
+          <button class="btn-text" id="category-cancel">取消</button>
+          <h3 id="category-modal-title">新建分类</h3>
+          <button class="btn-text btn-primary-text" id="category-save">保存</button>
+        </div>
+        <form id="category-form">
+          <input type="hidden" id="category-id">
+          <div class="form-group">
+            <input type="text" id="category-name" placeholder="分类名称" required>
+          </div>
+          <div class="form-row">
+            <label>颜色</label>
+            <input type="color" id="category-color" value="#0A84FF">
+          </div>
+          <div class="form-row">
+            <label>图标</label>
+            <div class="icon-picker" id="icon-picker">
+              <span class="icon-option selected" data-icon="📋">📋</span>
+              <span class="icon-option" data-icon="📅">📅</span>
+              <span class="icon-option" data-icon="💼">💼</span>
+              <span class="icon-option" data-icon="👤">👤</span>
+              <span class="icon-option" data-icon="🛒">🛒</span>
+              <span class="icon-option" data-icon="📚">📚</span>
+              <span class="icon-option" data-icon="🏠">🏠</span>
+              <span class="icon-option" data-icon="💡">💡</span>
+              <span class="icon-option" data-icon="🎯">🎯</span>
+              <span class="icon-option" data-icon="❤️">❤️</span>
+            </div>
+          </div>
+        </form>
+        <button class="btn-danger hidden" id="category-delete">删除分类</button>
+      </div>
+    </div>
+
+    <!-- 笔记详情弹窗 -->
+    <div class="modal hidden" id="memo-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="btn-text" id="memo-modal-close">关闭</button>
+          <h3>笔记详情</h3>
+          <button class="btn-text btn-danger-text" id="memo-modal-delete">删除</button>
+        </div>
+        <div class="memo-detail" id="memo-detail"></div>
+      </div>
+    </div>
+
+    <!-- 标签输入弹窗 -->
+    <div class="modal hidden" id="tag-input-modal">
+      <div class="modal-content modal-small">
+        <div class="modal-header">
+          <button class="btn-text" id="tag-input-cancel">取消</button>
+          <h3>添加标签</h3>
+          <button class="btn-text btn-primary-text" id="tag-input-confirm">确定</button>
+        </div>
+        <div class="form-group" style="padding: 20px;">
+          <input type="text" id="tag-input-field" placeholder="输入标签名称">
+          <div class="recent-tags" id="recent-tags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
