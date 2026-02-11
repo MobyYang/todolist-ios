@@ -609,13 +609,11 @@ html, body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 99;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  cursor: pointer;
 }
 
 .sidebar-overlay.visible {
   display: block;
-  opacity: 1;
 }
 
 /* ==================== 响应式 ==================== */
