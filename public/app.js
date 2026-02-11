@@ -764,16 +764,7 @@ class App {
       });
     });
 
-    // 统一处理侧边栏遮罩点击 - 直接关闭所有侧边栏
-    var overlay = document.getElementById('sidebar-overlay');
-    overlay.onclick = function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('memo-sidebar').classList.remove('open');
-      this.classList.remove('visible');
-      console.log('Overlay clicked, sidebars closed');
-    };
+    // 侧边栏遮罩点击处理已移到 HTML inline onclick
   }
 
   switchPage(page) {
